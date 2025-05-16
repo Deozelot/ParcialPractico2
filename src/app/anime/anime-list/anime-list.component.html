@@ -1,21 +1,41 @@
-  <br>
-  <div class="container contenedor-animes">
-  <div class="row">
-    <!-- COMPLETAR CON EL LLAMADO A UNA FUNCIÓN PROPIA QUE CALCULE EL RATING PROMEDIO -->
-    <p>El rating promedio es <span class="badge text-bg-primary rounded-pill"> 7.99 </span></p>
-    <div *ngIf="selected">
-      <app-anime-detail [animeDetail]="selectedBAnime"></app-anime-detail>
-      <hr>
-    </div>
-    <div class="col-4" *ngFor="let anime of animes">
-        <p>{{anime.name}}</p>
-        <img src={{anime.img}}  alt="anime image" width=50px>
-        <p>⭐{{anime.Rating}} <b>Categories: </b>{{anime.categorie}}</p>
-        <!-- COMPLETAR PARA INCLUIR LA CANTIDAD DE TEMPORADAS -->
-        <p class="card-text"><b># seasons: </b>"COMPLETAR"</p>
-        <a href="#" (click)="onSelected(anime)">More information</a>
-        <hr>
-   </div>
-
+<header class="header" style="align-items: center; background-color: #1e90ff;">
+  <div class="col" style="display: flex; justify-content: center; align-items: center;">
+    <img class="img-fluid"
+         style="max-width: 30%; height: auto;"
+         src="assets/animeLogo.png" alt="Anime" />
   </div>
+</header>
+<br>
+  <div class="container contenedor-animes">
+    <div class="row">
+      <!-- COMPLETAR CON EL LLAMADO A UNA FUNCIÓN PROPIA QUE CALCULE EL RATING PROMEDIO -->
+      <p>El rating promedio es <span class="badge text-bg-primary rounded-pill"> {{averageRating}} </span></p>
+      <div class="row"  style="display: flex; justify-content: center; align-items: center;">
+        <div
+          *ngFor="
+              let anime of animes
+            "
+          class="col-4"
+          style="display: flex; justify-content: center; align-items: center"
+        >
+          <div class="anime-card card p-2 mb-2" style="width: 15rem; height: 33rem;">
+            <h5 class="card-title"> <b>{{ anime.name }}</b></h5>
+            <img
+              class="card-img-top"
+              src="{{ anime.img }}"
+              alt="{{ anime.name }}"
+              (click)="onSelected(anime)"
+            />
+            <div class="card-body">
+              <p class="card-text"> {{ anime.Rating }}</p>
+              <p class="card-text"> <b>Categories: </b> {{anime.categorie}}</p>
+              <p class="card-text"><b># seasons: </b>{{anime.seasons.length}}</p>
+              <button class="btn btn-primary" (click)="onSelected(anime)">More Information</button>
+            </div>
+            <br>
+          </div>
+          <br>
+        </div>
+      </div>
+    </div>
 </div>

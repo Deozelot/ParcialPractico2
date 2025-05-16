@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Anime } from '../anime';
-import { AnimeService } from '../anime.service';
+import {Component, OnInit} from '@angular/core';
+import {Anime} from '../anime';
+import {AnimeService} from '../anime.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-anime-list',
@@ -12,7 +13,8 @@ export class AnimeListComponent implements OnInit {
   selectedBAnime!: Anime;
   selected = false;
   animes: Array<Anime> = [];
-  constructor(private animeService: AnimeService) { }
+  averageRating!: number;
+  constructor(private animeService: AnimeService, private router: Router) { }
 
   getAnimes(): void {
     this.animeService.getAnimes().subscribe((animes) => {
@@ -20,13 +22,23 @@ export class AnimeListComponent implements OnInit {
     });
   }
 
+  getAverangeRating(): void {
+    this.animeService.getAnimes().subscribe((animes) => {
+      let sum = 0;
+      animes.forEach(anime => {
+        sum += Number.parseInt(anime.Rating)
+      })
+      this.averageRating = sum/this.animes.length;
+    });
+  }
+
   onSelected(anime: Anime): void {
-    this.selected = true;
-    this.selectedBAnime = anime;
+    this.router.navigate(['/animes', anime.id])
   }
 
   ngOnInit() {
     this.getAnimes();
+    this.getAverangeRating();
   }
 
 }
