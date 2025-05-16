@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Anime } from '../anime';
+import {AnimeService} from "../anime.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-anime-detail',
@@ -9,10 +11,13 @@ import { Anime } from '../anime';
 export class AnimeDetailComponent implements OnInit {
 
   @Input() animeDetail!: Anime;
-  animeService: any;
-  route: any;
+  animeService: AnimeService;
+  route: ActivatedRoute;
 
-  constructor() { }
+  constructor(private _animeService: AnimeService, private _route: ActivatedRoute) {
+    this.animeService = _animeService;
+    this.route = _route;
+  }
 
   getAnimeDetail(): void {
     const id = this.route.snapshot.paramMap.get('id');
